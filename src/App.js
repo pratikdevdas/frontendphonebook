@@ -16,25 +16,6 @@ const App = () => {
   const [password, setPassword] = useState('');  
   const [user, setUser] = useState(null);
 
-  
-  const handleLogin= async(event)=>{
-    event.preventDefault()
-    try {
-      const user = await loginServices.login({username,password})
-       window.localStorage.setItem(
-         'phonebookUser', JSON.stringify({user})
-         )
-         herePerson.setToken(user.token)
-         setUser(user)
-         setUsername()
-         setPassword()
-
-    } catch (exception) {
-      console.log('login error')
-    }
-    
-  }
-
   useEffect(() => {
     console.log("effect");
    herePerson.getAll()
@@ -43,6 +24,40 @@ const App = () => {
             console.log(response)
     });
   }, []);
+
+  // savingto browsers local storage
+  useEffect(() => {
+    const loggedPhonebookUserJSON = window.localStorage.getItem('phonebookUser')
+    if(loggedPhonebookUserJSON){
+      const user = JSON.parse(loggedPhonebookUserJSON)
+      setUser(user)
+      herePerson.setToken(user.token)
+    }
+  },[]);
+  
+  const handleLogin= async(event)=>{
+    event.preventDefault()
+    console.log('logging in with',username,password)
+
+    try {
+      const user = await loginServices.login({
+        username,password
+      })
+       window.localStorage.setItem(
+         'phonebookUser', JSON.stringify(user)
+         )
+         herePerson.setToken(user.token)
+         setUser(user)
+         setUsername('')
+         setPassword('')
+         console.log(user)
+
+    } catch (exception) {
+      console.log('login error')
+    }  
+  }
+
+
   // console.log("render", persons.length, "notes");
 
   const handleSearch = event => {
@@ -140,7 +155,7 @@ const App = () => {
             <div>
                password
             <input 
-            type="password" 
+            type="password"
             value={password} 
             name="Password" 
             onChange={({target})=> setPassword(target.value)} 
@@ -149,12 +164,14 @@ const App = () => {
             <button type="submit">login</button>
           </form>)
       }
-      // if(user == null){
-      //   return <>{loginForm()}</>
-      // }
- 
+      if(user == null){
+        return (<>{loginForm()}</>)
+      }
+
+      const logOut = () =>(<><button onClick={()=>{setUser(null)}}>logout</button></>)       
   return (
     <div>
+      {user.name} logged-in
       <h2>Phonebook</h2>
       <Notification message={message}/>
       <Filter prop={searchTerm} prop2={handleSearch} />
@@ -169,7 +186,7 @@ const App = () => {
       <h2>Numbers</h2>
       <Person filterSearch={filterSearch} removePerson={removePerson}/>
       {/* login form */}
-     {loginForm()}
+     {logOut()}
     </div>
   );
 };
