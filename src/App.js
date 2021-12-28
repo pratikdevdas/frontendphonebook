@@ -51,8 +51,12 @@ const App = () => {
          setUsername('')
          setPassword('')
          console.log(user)
-
+        
     } catch (exception) {
+      setMessage(`invalid info try again`)
+      setTimeout(() => {
+        setMessage(null)
+      },5000)
       console.log('login error')
     }  
   }
@@ -87,7 +91,7 @@ const App = () => {
         const nameIsInvalid = newPerson.name.length > 4 && newPerson.number.toString().length > 8;
         console.log(!nameIsInvalid)//true
           if(!nameIsInvalid){
-            console.log("hi");
+            // console.log("hi");
             setMessage(`shorter than allowed length`)
             setTimeout(() => {
             setMessage(null)
@@ -168,10 +172,20 @@ const App = () => {
         return (<>{loginForm()}</>)
       }
 
-      const logOut = () =>(<><button onClick={()=>{setUser(null)}}>logout</button></>)       
+      const logOut = () => {
+        const handleLogout = (event) => {
+          window.localStorage.clear()
+          event.preventDefault()
+          setUser(null)
+          setMessage(`sucessfuly logged out`)
+        }
+      return (
+      <><button onClick={handleLogout}>logout</button></>
+      )}
+
   return (
     <div>
-      {user.name} logged-in
+      {user.name} logged-in.
       <h2>Phonebook</h2>
       <Notification message={message}/>
       <Filter prop={searchTerm} prop2={handleSearch} />
