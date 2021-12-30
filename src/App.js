@@ -81,6 +81,9 @@ const App = () => {
     setRegisterPassword("")
     setRegisterUsername("")
     setMessage("user created sucessfully")
+    setTimeout(() => {
+      setMessage(null)
+    },5000)
   }
 
   // console.log("render", persons.length, "notes");
@@ -224,6 +227,10 @@ const App = () => {
           window.localStorage.clear()
           event.preventDefault()
           setUser(null)
+          setMessage('log out sucessful')
+          setTimeout(() => {
+            setMessage(null)
+          },5000)
         }
       return (
       <><button onClick={handleLogout}>logout</button></>
