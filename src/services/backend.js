@@ -23,12 +23,18 @@ return response.data
 }
 
 const update = (id, updatedPerson) => {
-  const req2 = axios.put(`${baseUrl}/${id}`, updatedPerson)
+  const config = {
+    headers: {Authorization: token},
+  }
+  const req2 = axios.put(`${baseUrl}/${id}`, updatedPerson, config)
    return req2.then(response => response.data)
 };
 
 const remove = id => { 
-  return axios.delete(`${baseUrl}/${id}`);
+  const config = {
+    headers: {Authorization: token},
+  }
+  return axios.delete(`${baseUrl}/${id}`,config);
  }
 
 export default { 
