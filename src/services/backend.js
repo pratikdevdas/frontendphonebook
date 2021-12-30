@@ -27,11 +27,9 @@ const update = (id, updatedPerson) => {
    return req2.then(response => response.data)
 };
 
-
 const remove = id => { 
   return axios.delete(`${baseUrl}/${id}`);
  }
-
 
 export default { 
    getAll, 

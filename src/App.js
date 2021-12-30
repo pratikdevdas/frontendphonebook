@@ -5,7 +5,9 @@ import Person from "./components/Person";
 import Notification from "./components/Notification"
 import herePerson from "./services/backend"
 import loginServices from "./services/login";
+import registerServices from "./services/register";
 import LoginForm from "./components/LoginForm";
+import Togglable from "./components/Togglable"
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,6 +15,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState(null);
+  const [registerName, setRegisterName] = useState('');  
+  const [registerUsername, setRegisterUsername] = useState('');  
+  const [registerPassword, setRegisterPassword] = useState('');  
+  // const [registerUser, setRegisterUser] = useState('');  
   const [username, setUsername] = useState('');  
   const [password, setPassword] = useState('');  
   const [user, setUser] = useState(null);
@@ -60,6 +66,21 @@ const App = () => {
       },5000)
       console.log('login error')
     }  
+  }
+
+  const handleRegister = (event) => {
+    event.preventDefault()
+    console.log('happening')
+    const registerPerson = {
+      username: registerUsername,
+      name: registerName,
+      password: registerPassword
+    } 
+    registerServices.create(registerPerson)
+    setRegisterName("")
+    setRegisterPassword("")
+    setRegisterUsername("")
+    setMessage("user created sucessfully")
   }
 
   // console.log("render", persons.length, "notes");
@@ -142,8 +163,48 @@ const App = () => {
   
       const filterSearch = persons.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
+     const registerForm = () => {
+        return(
+         <>
+          <form onSubmit={handleRegister}>
+          <h2>Register</h2>
+          <div>
+           username
+        <input 
+        type="text" 
+        value={registerUsername} 
+        name="Username" 
+        onChange={({ target }) => setRegisterUsername(target.value)} 
+        />
+        </div>
+        <div>
+          name
+        <input 
+        type="text" 
+        value={registerName} 
+        name="Username" 
+        onChange={({ target }) => setRegisterName(target.value)} 
+        />
+        </div>
+        <div>
+           password
+        <input 
+        type="password" 
+        value={registerPassword} 
+        name="Password" 
+        onChange={({ target }) => setRegisterPassword(target.value)}
+        />
+        </div>
+        <button type="submit">register</button>
+          </form>
+         </> 
+        )
+      }
+
       const loginForm = () => {
         return(
+          <>
+          {registerForm()}
         <LoginForm
         message={message}
         handleLogin={handleLogin}
@@ -151,7 +212,7 @@ const App = () => {
         password={password}
         handleUsername={({target})=> setUsername(target.value)}
         handlePassword={({target})=> setPassword(target.value)}
-        />)
+        /></>)
       }
 
       if(user == null){
@@ -163,7 +224,6 @@ const App = () => {
           window.localStorage.clear()
           event.preventDefault()
           setUser(null)
-          setMessage(`sucessfuly logged out`)
         }
       return (
       <><button onClick={handleLogout}>logout</button></>
@@ -176,6 +236,7 @@ const App = () => {
       <Notification message={message}/>
       <Filter prop={searchTerm} prop2={handleSearch} />
       <h3>Add a new</h3>
+      <Togglable buttonLabel="Add a new Number">
       <PersonForm
         prop1={addName}
         prop2={newName}
@@ -183,6 +244,7 @@ const App = () => {
         prop4={newNumber}
         prop5={handleNumberChange}
       />
+    </Togglable>
       <h2>Numbers</h2>
       <Person filterSearch={filterSearch} removePerson={removePerson}/>
       {/* login form */}
