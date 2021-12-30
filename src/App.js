@@ -5,6 +5,7 @@ import Person from "./components/Person";
 import Notification from "./components/Notification"
 import herePerson from "./services/backend"
 import loginServices from "./services/login";
+import LoginForm from "./components/LoginForm";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -61,9 +62,7 @@ const App = () => {
     }  
   }
 
-
   // console.log("render", persons.length, "notes");
-
   const handleSearch = event => {
     setSearchTerm(event.target.value);
     //the event handler which that syncronizes the change made to input with component state
@@ -145,29 +144,16 @@ const App = () => {
 
       const loginForm = () => {
         return(
-        <form onSubmit={handleLogin}>
-          <h2>Login</h2>
-              <div>
-               username
-            <input 
-            type="text" 
-            value={username} 
-            name="Username" 
-            onChange={({target})=> setUsername(target.value)} 
-            />
-            </div>
-            <div>
-               password
-            <input 
-            type="password"
-            value={password} 
-            name="Password" 
-            onChange={({target})=> setPassword(target.value)} 
-            />
-            </div>
-            <button type="submit">login</button>
-          </form>)
+        <LoginForm
+        message={message}
+        handleLogin={handleLogin}
+        username={username}
+        password={password}
+        handleUsername={({target})=> setUsername(target.value)}
+        handlePassword={({target})=> setPassword(target.value)}
+        />)
       }
+
       if(user == null){
         return (<>{loginForm()}</>)
       }
