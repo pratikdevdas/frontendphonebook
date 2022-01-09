@@ -3,8 +3,8 @@ const baseUrl = '/api/persons'
 
 let token = null
 
-const setToken = newToken =>{
-    token = `bearer ${newToken}`
+const setToken = newToken => {
+  token = `bearer ${newToken}`
 }
 
 
@@ -13,32 +13,32 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const create = async newObject =>{
+const create = async newObject => {
   const config = {
-    headers: {Authorization: token},
+    headers: { Authorization: token },
   }
 
-const response = await axios.post(baseUrl, newObject, config)
-return response.data
+  const response = await axios.post(baseUrl, newObject, config)
+  return response.data
 }
 
 const update = (id, updatedPerson) => {
   const config = {
-    headers: {Authorization: token},
+    headers: { Authorization: token },
   }
   const req2 = axios.put(`${baseUrl}/${id}`, updatedPerson, config)
-   return req2.then(response => response.data)
-};
+  return req2.then(response => response.data)
+}
 
-const remove = id => { 
+const remove = id => {
   const config = {
-    headers: {Authorization: token},
+    headers: { Authorization: token },
   }
-  return axios.delete(`${baseUrl}/${id}`,config);
- }
+  return axios.delete(`${baseUrl}/${id}`,config)
+}
 
-export default { 
-   getAll, 
+export default {
+  getAll,
   create,
   remove,
   update,
