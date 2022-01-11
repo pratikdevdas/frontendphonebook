@@ -25,6 +25,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [toggleRegister, showToggleRegister] = useState(false)
 
   useEffect(() => {
     console.log('effect')
@@ -148,30 +149,39 @@ const App = () => {
               `${checkPerson.name} has been updated`)
             setTimeout(() => {
               setMessage(null)
-            }, 5000) })
-          .catch(error => {console.log('error')
-            setMessage(`Information of ${checkPerson.name} has been already removed. Please refresh`)
-            setTimeout(() => {
-              setMessage(null)
-            }, 5000)})
-
+            }, 5000) }).catch(() => console.log('error'))
     }
   }
 
   const removePerson = (id, name) => {
     if (window.confirm(`delete ${name}?`)) {
       herePerson.remove(id,name)
+        .then(console.log(herePerson.remove(id,name)))
         .then(() => {
           setPersons(persons.filter(person => person.id !== id))
-        })
+          // console.log('happened')
+        }).catch(() => console.log('error'))
     }
   }
 
   const filterSearch = persons.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
+  const loginForm = () => {
+    return(<>
+      <LoginForm
+        message={message}
+        handleLogin={handleLogin}
+        username={username}
+        password={password}
+        handleUsername={({ target }) => setUsername(target.value)}
+        handlePassword={({ target }) => setPassword(target.value)}
+      /></>)
+  }
+
   const registerForm = () => {
     return(
       <>
+
         <RegisterForm
           registerName={registerName}
           handleRegister={handleRegister}
@@ -180,28 +190,34 @@ const App = () => {
           handleName={({ target }) => setRegisterName(target.value)}
           handleUsername={({ target }) => setRegisterUsername(target.value)}
           handlePassword={({ target }) => setRegisterPassword(target.value)}
-
         />
       </>
     )
   }
 
-  const loginForm = () => {
+
+
+  const signupForm = () => {
+    const handleToggle = (event) => {
+      event.preventDefault
+      showToggleRegister(!toggleRegister)
+    }
+    if (toggleRegister === false){
+      return (
+        <><button onClick={handleToggle}>login</button>
+          {registerForm()}</>
+      )
+    }
     return(
       <>
-        {registerForm()}
-        <LoginForm
-          message={message}
-          handleLogin={handleLogin}
-          username={username}
-          password={password}
-          handleUsername={({ target }) => setUsername(target.value)}
-          handlePassword={({ target }) => setPassword(target.value)}
-        /></>)
+        <button onClick={handleToggle}>SignUp</button>
+
+        {loginForm()}
+      </>)
   }
 
   if(user === null){
-    return (<>{loginForm()}</>)
+    return (<>{signupForm()}</>)
   }
 
   const logOut = () => {

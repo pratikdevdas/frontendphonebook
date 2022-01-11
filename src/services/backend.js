@@ -9,7 +9,7 @@ const setToken = newToken => {
 
 
 const getAll = () => {
-  const request = axios.get(baseUrl)
+  const request = axios.get(`${baseUrl}`)
   return request.then(response => response.data)
 }
 
@@ -34,6 +34,7 @@ const remove = id => {
   const config = {
     headers: { Authorization: token },
   }
+  console.log(config)
   return axios.delete(`${baseUrl}/${id}`,config)
 }
 

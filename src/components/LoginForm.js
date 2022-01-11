@@ -1,6 +1,7 @@
 import React from 'react'
 
 const LoginForm = ({
+  // registerForm,
   handleLogin,
   message,
   username,
@@ -8,10 +9,24 @@ const LoginForm = ({
   handleUsername,
   handlePassword
 }) => {
+
+  // const [show, setShow] = useState(false)
+
+  // const handleClick = (event) => {
+  //   event.preventDefault()
+  //   setShow(true)
+  // }
+
+  // if (show===true)
+  // {
+  //   return registerForm
+  // }
+
   return (
     <div>
       {message}
       <form onSubmit={handleLogin}>
+        {/* <button onClick={handleClick}>signup</button> */}
         <h2>Login</h2>
         <div>
                username
