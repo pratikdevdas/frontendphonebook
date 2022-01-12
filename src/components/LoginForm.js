@@ -1,7 +1,7 @@
 import React from 'react'
 
 const LoginForm = ({
-  // registerForm,
+  handleToggle,
   handleLogin,
   message,
   username,
@@ -10,44 +10,42 @@ const LoginForm = ({
   handlePassword
 }) => {
 
-  // const [show, setShow] = useState(false)
-
-  // const handleClick = (event) => {
-  //   event.preventDefault()
-  //   setShow(true)
-  // }
-
-  // if (show===true)
-  // {
-  //   return registerForm
-  // }
-
   return (
     <div>
       {message}
-      <form onSubmit={handleLogin}>
-        {/* <button onClick={handleClick}>signup</button> */}
-        <h2>Login</h2>
-        <div>
-               username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={handleUsername}
-          />
-        </div>
-        <div>
-               password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={handlePassword}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <section>
+        <form onSubmit={handleLogin}>
+          {/* <button onClick={handleClick}>signup</button> */}
+          <h2>Login</h2>
+          <button onClick={handleToggle}>Sign Up</button>
+          <div className='input-group'>
+            <div>
+              <div className='label'>
+                <label >username</label>
+              </div>
+
+              <input
+                type="text"
+                value={username}
+                name="Username"
+                onChange={handleUsername}
+              />
+            </div>
+            <div>
+              <div className='label'>
+                <label htmlFor="">password</label>
+              </div>
+              <input
+                type="password"
+                value={password}
+                name="Password"
+                onChange={handlePassword}
+              />
+            </div>
+          </div>
+          <button type="submit" className='btn-submit'>login</button>
+        </form>
+      </section>
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import React from 'react'
-// import Togglable from './Togglable'
-
+import './RegisterForm.css'
 
 const RegisterForm = ({
+  handleToggle,
   registerName,
   handleRegister,
   registerUsername,
@@ -21,6 +21,8 @@ const RegisterForm = ({
               <div className='logo'>
                 <h2>SignUp </h2>
               </div>
+              <button onClick={handleToggle}>Login</button>
+
               <div className='signup'>
 
               </div>

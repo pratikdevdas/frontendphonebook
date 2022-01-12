@@ -166,52 +166,50 @@ const App = () => {
 
   const filterSearch = persons.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
-  const loginForm = () => {
-    return(<>
-      <LoginForm
-        message={message}
-        handleLogin={handleLogin}
-        username={username}
-        password={password}
-        handleUsername={({ target }) => setUsername(target.value)}
-        handlePassword={({ target }) => setPassword(target.value)}
-      /></>)
-  }
-
-  const registerForm = () => {
-    return(
-      <>
-
-        <RegisterForm
-          registerName={registerName}
-          handleRegister={handleRegister}
-          registerUsername={registerUsername}
-          registerPassword={registerPassword}
-          handleName={({ target }) => setRegisterName(target.value)}
-          handleUsername={({ target }) => setRegisterUsername(target.value)}
-          handlePassword={({ target }) => setRegisterPassword(target.value)}
-        />
-      </>
-    )
-  }
-
-
-
   const signupForm = () => {
     const handleToggle = (event) => {
       event.preventDefault
       showToggleRegister(!toggleRegister)
     }
+    const loginForm = () => {
+      return(<>
+        <LoginForm
+          handleToggle={handleToggle}
+          message={message}
+          handleLogin={handleLogin}
+          username={username}
+          password={password}
+          handleUsername={({ target }) => setUsername(target.value)}
+          handlePassword={({ target }) => setPassword(target.value)}
+        /></>)
+    }
+
+    const registerForm = () => {
+      return(
+        <>
+          <RegisterForm
+            handleToggle={handleToggle}
+            registerName={registerName}
+            handleRegister={handleRegister}
+            registerUsername={registerUsername}
+            registerPassword={registerPassword}
+            handleName={({ target }) => setRegisterName(target.value)}
+            handleUsername={({ target }) => setRegisterUsername(target.value)}
+            handlePassword={({ target }) => setRegisterPassword(target.value)}
+          />
+        </>
+      )
+    }
+
     if (toggleRegister === false){
       return (
-        <><button onClick={handleToggle}>login</button>
-          {registerForm()}</>
+        <>
+          {registerForm()}
+        </>
       )
     }
     return(
       <>
-        <button onClick={handleToggle}>SignUp</button>
-
         {loginForm()}
       </>)
   }
