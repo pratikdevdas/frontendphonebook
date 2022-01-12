@@ -21,10 +21,8 @@ const RegisterForm = ({
               <div className='logo'>
                 <h2>SignUp </h2>
               </div>
-              <button onClick={handleToggle}>Login</button>
-
-              <div className='signup'>
-
+              <div>
+                <button onClick={handleToggle}>Login</button>
               </div>
             </div>
             <div>

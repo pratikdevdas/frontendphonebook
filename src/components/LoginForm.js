@@ -12,7 +12,6 @@ const LoginForm = ({
 
   return (
     <div>
-      {message}
       <section>
         <form onSubmit={handleLogin}>
           {/* <button onClick={handleClick}>signup</button> */}
@@ -23,7 +22,7 @@ const LoginForm = ({
               <div className='label'>
                 <label >username</label>
               </div>
-
+              {message}
               <input
                 type="text"
                 value={username}
