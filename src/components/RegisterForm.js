@@ -13,7 +13,7 @@ const RegisterForm = ({
 
 }) => {
   return (
-    <div>
+    <div className='body'>
       <div>
         <section>
           <form onSubmit={handleRegister} className="form">

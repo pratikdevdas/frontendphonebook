@@ -1,4 +1,5 @@
 import React from 'react'
+import './LoginForm.css'
 
 const LoginForm = ({
   handleToggle,
@@ -11,7 +12,7 @@ const LoginForm = ({
 }) => {
 
   return (
-    <div>
+    <div className='body'>
       <section>
         <form onSubmit={handleLogin}>
           {/* <button onClick={handleClick}>signup</button> */}
