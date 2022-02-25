@@ -1,22 +1,32 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import './RegisterForm.css'
 
 const RegisterForm = ({
   handleToggle,
-  registerName,
-  handleRegister,
-  registerUsername,
-  registerPassword,
-  handleName,
-  handleUsername,
-  handlePassword
+  createNewUser,
 
 }) => {
+  const [registerName, setRegisterName] = useState('')
+  const [registerUsername, setRegisterUsername] = useState('')
+  const [registerPassword, setRegisterPassword] = useState('')
+
+  const addUser = (event) => {
+    event.preventDefault()
+    createNewUser(
+      { username: registerUsername,
+        name: registerName,
+        password: registerPassword }
+    )
+    setRegisterName('')
+    setRegisterPassword('')
+    setRegisterUsername('')
+
+  }
   return (
     <div className='body'>
       <div>
         <section>
-          <form onSubmit={handleRegister} className="form">
+          <form onSubmit={addUser} className="form">
             <div className="form-header">
               <div className='logo'>
                 <h2>SignUp </h2>
@@ -34,7 +44,7 @@ const RegisterForm = ({
                   type="text"
                   value={registerUsername}
                   name="Username"
-                  onChange={handleUsername}
+                  onChange={({ target }) => setRegisterUsername(target.value)}
                 />
 
                 <div>
@@ -45,7 +55,7 @@ const RegisterForm = ({
                     type="text"
                     value={registerName}
                     name="Name"
-                    onChange={handleName}
+                    onChange={({ target }) => setRegisterName(target.value)}
                   />
                 </div>
                 <div>
@@ -56,7 +66,7 @@ const RegisterForm = ({
                     type="password"
                     value={registerPassword}
                     name="Password"
-                    onChange={handlePassword}
+                    onChange={({ target }) => setRegisterPassword(target.value)}
                   />
                 </div>
               </div>
