@@ -14,13 +14,8 @@ import RegisterForm from './components/RegisterForm'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [message, setMessage] = useState(null)
-  const [registerName, setRegisterName] = useState('')
-  const [registerUsername, setRegisterUsername] = useState('')
-  const [registerPassword, setRegisterPassword] = useState('')
   // const [registerUser, setRegisterUser] = useState('');
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -72,18 +67,8 @@ const App = () => {
     }
   }
 
-  const handleRegister = (event) => {
-    event.preventDefault()
-    console.log('happening')
-    const registerPerson = {
-      username: registerUsername,
-      name: registerName,
-      password: registerPassword
-    }
-    registerServices.create(registerPerson)
-    setRegisterName('')
-    setRegisterPassword('')
-    setRegisterUsername('')
+  const handleRegister = (userObject) => {
+    registerServices.create(userObject)
     setMessage('user created sucessfully')
     setTimeout(() => {
       setMessage(null)
@@ -95,41 +80,22 @@ const App = () => {
     setSearchTerm(event.target.value)
     //the event handler which that syncronizes the change made to input with component state
   }
-  const handleNameChange = event => {
-    // console.log(event.target.value);
-    setNewName(event.target.value)
-  }
-  const handleNumberChange = event2 => {
-    // console.log(event2.target.value);
-    setNewNumber(event2.target.value)
-  }
 
-  const addName = event => {
-    event.preventDefault()
-
-    const checkPerson = persons.find(person => person.name === newName)
-    console.log(checkPerson)
+  const addName = (blogObject) => {
+    const checkPerson = persons.find(person => person.name === blogObject.name)
 
     if (!checkPerson) {
-      const newPerson = {
-        name: newName,
-        number: newNumber,
-      }
-      const nameIsInvalid = newPerson.name.length > 4 && newPerson.number.toString().length > 8
-      console.log(!nameIsInvalid)//true
+      const nameIsInvalid = blogObject.name.length > 4 && blogObject.number.toString().length > 8
       if(!nameIsInvalid){
-        // console.log("hi");
         setMessage('shorter than allowed length')
         setTimeout(() => {
           setMessage(null)
         }, 5000)
       }
-      herePerson.create(newPerson)
+      herePerson.create(blogObject)
         .then(response => {
           setPersons(persons.concat(response))
-          setNewName('')
-          setNewNumber('')
-          setMessage(`${newName} has been added`)})
+        })
         .then(setTimeout(() => {
           setMessage(null)
         }, 5000)).catch((error) => console.log(error))
@@ -137,14 +103,12 @@ const App = () => {
 
     else {
       const cool = { name: checkPerson.name,
-        number: newNumber }
+        number: blogObject.number }
       console.log(cool)
-      if (window.confirm(`Update ${checkPerson.name}'s number to "${newNumber}"`))
+      if (window.confirm(`Update ${checkPerson.name}'s number to "${blogObject.number}"`))
         herePerson.update(checkPerson.id,cool)
           .then(response => { console.log(response)
             setPersons(persons.map(p => p.name === response.name ? response : p))
-            setNewName('')
-            setNewNumber('')
             setMessage(
               `${checkPerson.name} has been updated`)
             setTimeout(() => {
@@ -168,7 +132,7 @@ const App = () => {
 
   const signupForm = () => {
     const handleToggle = (event) => {
-      event.preventDefault
+      event.preventDefault()
       showToggleRegister(!toggleRegister)
     }
     const loginForm = () => {
@@ -189,13 +153,7 @@ const App = () => {
         <>
           <RegisterForm
             handleToggle={handleToggle}
-            registerName={registerName}
-            handleRegister={handleRegister}
-            registerUsername={registerUsername}
-            registerPassword={registerPassword}
-            handleName={({ target }) => setRegisterName(target.value)}
-            handleUsername={({ target }) => setRegisterUsername(target.value)}
-            handlePassword={({ target }) => setRegisterPassword(target.value)}
+            createNewUser={handleRegister}
           />
         </>
       )
@@ -241,11 +199,7 @@ const App = () => {
       <h3>Add a new</h3>
       <Togglable buttonLabel="Add a new Number">
         <PersonForm
-          prop1={addName}
-          prop2={newName}
-          prop3={handleNameChange}
-          prop4={newNumber}
-          prop5={handleNumberChange}
+          createBlog={addName}
         />
       </Togglable>
       <h2>Numbers</h2>
