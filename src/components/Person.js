@@ -5,13 +5,15 @@ const Person = ({ filterSearch,removePerson }) => {
   return (
 
     <div >
-      {filterSearch.map(note =>
-        <div key ={note.id}>
-          {note.name} {note.number} <button onClick={() => removePerson(note.id, note.name)}>Delete</button>
-        </div>
-      )}</div>
+      <ul>
 
-
+        {filterSearch.map(person =>
+          <li key ={person.id}>
+            {person.name} {person.number} <button onClick={() => removePerson(person.id, person.name)}>Delete</button>
+          </li>
+        )}
+      </ul>
+    </div>
   )
 }
 

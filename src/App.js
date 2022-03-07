@@ -8,7 +8,6 @@ import loginServices from './services/login'
 import registerServices from './services/register'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
-// form link () react form
 import './App.css'
 import RegisterForm from './components/RegisterForm'
 
@@ -22,14 +21,6 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [toggleRegister, showToggleRegister] = useState(false)
 
-  useEffect(() => {
-    console.log('effect')
-    herePerson.getAll()
-      .then(response => {
-        setPersons(response)
-        console.log(response)
-      })
-  }, [])
 
   // savingto browsers local storage
   useEffect(() => {
@@ -40,6 +31,18 @@ const App = () => {
       herePerson.setToken(user.token)
     }
   },[])
+
+
+  useEffect(() => {
+    console.log('effect')
+    herePerson.getSingle()
+      .then(response => {
+        setPersons(response)
+        console.log(response)
+      })
+  }, [])
+
+
 
   const handleLogin= async(event) => {
     event.preventDefault()
@@ -83,7 +86,6 @@ const App = () => {
 
   const addName = (blogObject) => {
     const checkPerson = persons.find(person => person.name === blogObject.name)
-
     if (!checkPerson) {
       const nameIsInvalid = blogObject.name.length > 4 && blogObject.number.toString().length > 8
       if(!nameIsInvalid){
@@ -102,9 +104,10 @@ const App = () => {
     }
 
     else {
-      const cool = { name: checkPerson.name,
-        number: blogObject.number }
-      console.log(cool)
+      const cool = {
+        name: checkPerson.name,
+        number: blogObject.number
+      }
       if (window.confirm(`Update ${checkPerson.name}'s number to "${blogObject.number}"`))
         herePerson.update(checkPerson.id,cool)
           .then(response => { console.log(response)
@@ -120,7 +123,7 @@ const App = () => {
   const removePerson = (id, name) => {
     if (window.confirm(`delete ${name}?`)) {
       herePerson.remove(id,name)
-        .then(console.log(herePerson.remove(id,name)))
+        .then(console.log(id,name))
         .then(() => {
           setPersons(persons.filter(person => person.id !== id))
           // console.log('happened')
