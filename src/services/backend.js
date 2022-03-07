@@ -7,9 +7,19 @@ const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
-
 const getAll = () => {
   const request = axios.get(`${baseUrl}`)
+  console.log(request)
+  return request.then(response => response.data).catch(error => console.log(error))
+}
+
+const getSingle = () => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const request = axios.get(`${baseUrl}/check`, config)
   return request.then(response => response.data)
 }
 
@@ -34,12 +44,14 @@ const remove = id => {
   const config = {
     headers: { Authorization: token },
   }
-  console.log(config)
-  return axios.delete(`${baseUrl}/${id}`,config)
+
+  const deleted = axios.delete(`${baseUrl}/${id}`,config)
+  return deleted.then(() => console.log('sucess')).catch(() => console.log('different user'))
 }
 
 export default {
   getAll,
+  getSingle,
   create,
   remove,
   update,
