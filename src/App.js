@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Filter from './components/Filter'
+import Navbar from './components/Navbar'
 import PersonForm from './components/PersonForm'
 import Person from './components/Person'
 import Notification from './components/Notification'
@@ -195,10 +195,16 @@ const App = () => {
 
   return (
     <div>
-      {user.name} logged-in.
+      <Navbar prop={searchTerm} prop2={handleSearch} />
+      <div>
+
+        {user.name} logged-in.
+      </div>
+      <h1 className="text-3xl font-bold underline" >
+      Hello world!
+      </h1>
       <h2>Phonebook</h2>
       <Notification message={message}/>
-      <Filter prop={searchTerm} prop2={handleSearch} />
       <h3>Add a new</h3>
       <Togglable buttonLabel="Add a new Number">
         <PersonForm
