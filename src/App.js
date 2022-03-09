@@ -15,7 +15,6 @@ const App = () => {
   const [persons, setPersons] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [message, setMessage] = useState(null)
-  // const [registerUser, setRegisterUser] = useState('');
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -205,10 +204,10 @@ const App = () => {
       </h1>
       <h2>Phonebook</h2>
       <Notification message={message}/>
-      <h3>Add a new</h3>
+
       <Togglable buttonLabel="Add a new Number">
         <PersonForm
-          createBlog={addName}
+          createPerson={addName}
         />
       </Togglable>
       <h2>Numbers</h2>

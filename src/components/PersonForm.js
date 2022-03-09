@@ -1,6 +1,6 @@
 import React,{ useState } from 'react'
 
-const PersonForm = ({ createBlog }) => {
+const PersonForm = ({ createPerson }) => {
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState([])
@@ -16,7 +16,7 @@ const PersonForm = ({ createBlog }) => {
 
   const addNote = (event) => {
     event.preventDefault()
-    createBlog({
+    createPerson({
       name: newName,
       number: newNumber
     })
