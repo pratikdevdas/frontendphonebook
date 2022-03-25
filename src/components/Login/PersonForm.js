@@ -6,11 +6,9 @@ const PersonForm = ({ createPerson }) => {
   const [newNumber, setNewNumber] = useState([])
 
   const handleNameChange = event => {
-    // console.log(event.target.value);
     setNewName(event.target.value)
   }
   const handleNumberChange = event => {
-    // console.log(event2.target.value);
     setNewNumber(event.target.value)
   }
 

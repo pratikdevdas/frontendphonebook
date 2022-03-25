@@ -26,8 +26,6 @@ const Navbar = ({ prop,prop2 }) => {
             value={prop}
             placeholder="Search"
             onChange={prop2}
-
-
           />
         </div>
 

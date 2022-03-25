@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from './components/Navbar'
-import PersonForm from './components/PersonForm'
-import Person from './components/Person'
-import Notification from './components/Notification'
+import Navbar from './components/Navbar/Navbar'
+import Body from './components/Body/Body'
 import herePerson from './services/backend'
 import loginServices from './services/login'
 import registerServices from './services/register'
-import LoginForm from './components/LoginForm'
-import Togglable from './components/Togglable'
+import LoginForm from './components/Login/LoginForm'
 import './App.css'
-import RegisterForm from './components/RegisterForm'
+import RegisterForm from './components/Register/RegisterForm'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -19,7 +16,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [toggleRegister, showToggleRegister] = useState(false)
-
 
   // savingto browsers local storage
   useEffect(() => {
@@ -199,20 +195,7 @@ const App = () => {
 
         {user.name} logged-in.
       </div>
-      <h1 className="text-3xl font-bold underline" >
-      Hello world!
-      </h1>
-      <h2>Phonebook</h2>
-      <Notification message={message}/>
-
-      <Togglable buttonLabel="Add a new Number">
-        <PersonForm
-          createPerson={addName}
-        />
-      </Togglable>
-      <h2>Numbers</h2>
-      <Person filterSearch={filterSearch} removePerson={removePerson}/>
-      {/* login form */}
+      <Body message={message} addName={addName} filterSearch={filterSearch}  removePerson={removePerson} />
       {logOut()}
     </div>
   )
