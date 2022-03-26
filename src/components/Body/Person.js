@@ -1,5 +1,5 @@
 import React from 'react'
-// import Note from './Note'
+
 const Person = ({ filterSearch,removePerson }) => {
 
   return (
